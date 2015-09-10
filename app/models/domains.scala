@@ -15,19 +15,19 @@ object Summary {
   implicit val dateTimeReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
   implicit val dateTimeWrites = Writes.jodaDateWrites("yyyy-MM-dd HH:mm:ss")
 
-  implicit val summaryReads = Json.reads[Summary]
-  implicit val summaryWrites = Json.writes[Summary]
+//  implicit val summaryReads = Json.reads[Summary]
+//  implicit val summaryWrites = Json.writes[Summary]
 
-//  implicit val summaryReads: Reads[Summary] = (
-//    (__ \ "type").read[String](Reads.verifying[String](_ == "summaries")) andKeep
-//      (__ \ "gtin").read[String] and
-//      (__ \ "title").read[String]
-//    )((gtin, title) => Summary("", gtin, title, "", "", "", "", None, None))
-//
-//
-//  implicit val summaryWrites: Writes[Summary] = (
-//    (__ \ "type").write[String] and
-//      (__ \ "gtin").write[String] and
-//      (__ \ "title").write[String]
-//    ) { summary: Summary => ("summaries", summary.gtin, summary.title) }
+  implicit val summaryReads: Reads[Summary] = (
+    (__ \ "type").read[String](Reads.verifying[String](_ == "summaries")) andKeep
+      (__ \ "gtin").read[String] and
+      (__ \ "title").read[String]
+    )((gtin, title) => Summary(None, gtin, title, "", "", "", "", None, None))
+
+
+  implicit val summaryWrites: Writes[Summary] = (
+    (__ \ "type").write[String] and
+      (__ \ "gtin").write[String] and
+      (__ \ "title").write[String]
+    ) { summary: Summary => ("summaries", summary.gtin, summary.title) }
 }
