@@ -58,10 +58,10 @@ class SummaryApiController @Inject() (val reactiveMongoApi: ReactiveMongoApi,
     }
     else collection.genericQueryBuilder.cursor[Summary]().collect[List]()
 
-      futurePage.map({ summaries =>
-        implicit val msg = messagesApi.preferred(request)
+    futurePage.map({ summaries =>
+      implicit val msg = messagesApi.preferred(request)
 
-      Ok(Json.toJson(Map("summaries" -> summaries)))
+      Ok(Json.toJson(summaries))
     }).recover {
       case t: TimeoutException =>
         Logger.error("Problem found in summary list process")
