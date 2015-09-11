@@ -9,6 +9,8 @@ case class Summary(_id: Option[BSONObjectID], gtin: String, title: String, bookT
 
 case class SummaryWrapper(`type`: String, id: String, attributes: Summary)
 
+case class Data(data: List[SummaryWrapper])
+
 
 object Summary {
   import play.api.libs.json._
@@ -26,6 +28,9 @@ object Summary {
 
   implicit val summaryWrapperReads = Json.reads[SummaryWrapper]
   implicit val summaryWrapperWrites = Json.writes[SummaryWrapper]
+
+  implicit val dataReads = Json.reads[Data]
+  implicit val dataWritess = Json.writes[Data]
 
 }
 
