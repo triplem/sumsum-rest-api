@@ -61,7 +61,7 @@ class SummaryApiController @Inject() (val reactiveMongoApi: ReactiveMongoApi,
     futurePage.map({ summaries =>
       implicit val msg = messagesApi.preferred(request)
 
-      Ok(Json.toJson(summaries))
+      Ok(Json.toJson(summaries map (summary => SummaryWrapper("summaries", summary._id.get.stringify, summary))))
     }).recover {
       case t: TimeoutException =>
         Logger.error("Problem found in summary list process")
